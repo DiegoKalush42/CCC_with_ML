@@ -193,7 +193,7 @@ st.markdown("---")
 # ============================================================
 # SLIDERS
 # ============================================================
-st.subheader("Simulación — moveé las palancas")
+st.subheader("Simulación — mueve las palancas")
 
 col_dio, col_dso, col_dpo = st.columns(3)
 with col_dio:
