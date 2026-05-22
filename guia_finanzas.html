@@ -267,7 +267,7 @@
 <tr>
   <td><strong>4</strong></td>
   <td>EDA — boxplots de cada feature para detectar outliers y verificar coherencia.</td>
-  <td>Detección de outliers estructurales (Ford en DSO, CAT en DIO).</td>
+  <td>Detección de outliers estructurales (Ford en DSO, Caterpillar en DIO).</td>
   <td><a href="#eda">§8</a></td>
 </tr>
 
@@ -316,7 +316,7 @@
 <tr>
   <td><strong>11</strong></td>
   <td>Calcular perfil de cada cluster (centroide), identificar cluster eficiente como el de menor CCC promedio.</td>
-  <td>Cluster 1 (AAPL, DELL, HPQ, PEP) es el más eficiente con CCC = −39.5d.</td>
+  <td>Cluster 1 (Apple, Dell, HP, PepsiCo) es el más eficiente con CCC = −39.5d.</td>
   <td><a href="#ccc">§1</a></td>
 </tr>
 
@@ -439,7 +439,7 @@ DPO es <strong>al revés</strong>: subir es bueno. Las otras dos (DIO, DSO) baja
 
 <p>Los valores absolutos (revenue, COGS, cash, inventario, AR, AP, etc.) son <strong>estados financieros auditados</strong>. Cadena completa:</p>
 
-<pre><code>Empresa (WMT, AAPL, etc.)
+<pre><code>Empresa (Walmart, Apple, etc.)
    ↓ obligación legal (Securities Act 1933)
 10-K anual presentado a la SEC
    ↓ disponible en EDGAR (sec.gov)
@@ -535,7 +535,7 @@ inventory_pct   = Inv  / current_assets × 100
 <h4>Qué buscar en los plots</h4>
 <ul>
   <li>¿La caja está donde tiene sentido? (DPO mediana ~60d ✓, no 500d)</li>
-  <li>¿Puntos lejos de la caja? = outliers (4 en DSO = Ford, 4 en DIO = CAT)</li>
+  <li>¿Puntos lejos de la caja? = outliers (4 en DSO = Ford, 4 en DIO = Caterpillar)</li>
   <li>¿Caja chica o gigante? Caja gigante = variación grande = clusters más fácil de armar</li>
 </ul>
 
@@ -582,7 +582,7 @@ Para tu dataset: el ratio max/mediana en DSO = 6.45 (Ford 130/20) y en CCC = 6.9
 </div>
 
 <h4>Outliers estructurales</h4>
-<p>Los outliers de tu dataset (Ford con DSO ~120, CAT con DIO 200+) <strong>no son errores</strong> — son outliers estructurales (empresas que por modelo de negocio son distintas). Aparecen 4 veces porque cada empresa tiene 4 años fiscales en el dataset.</p>
+<p>Los outliers de tu dataset (Ford con DSO ~120, Caterpillar con DIO 200+) <strong>no son errores</strong> — son outliers estructurales (empresas que por modelo de negocio son distintas). Aparecen 4 veces porque cada empresa tiene 4 años fiscales en el dataset.</p>
 
 <div class="defensa">
 "Justificamos winsorización porque tres features (DSO, DIO, CCC) cumplen la regla max/mediana &gt; 5 y muestran salto evidente entre Q3 y máximo. La std del orden del IQR confirma colas pesadas. Con n=96 elegimos 2.5% por cola: amortigua los extremos sin eliminar los outliers estructurales, que son justamente los que queremos que el clustering identifique como cluster propio."
@@ -727,7 +727,7 @@ En tu corrida: <strong>ARI = 0.841</strong> → ~84% del acuerdo no es atribuibl
 <table>
 <tr><th>Antes (Ridge en $ absolutos)</th><th>Ahora (ratios)</th></tr>
 <tr><td>Predecía inventario, AR, cash en USD</td><td>Predice DIO, DSO, DPO óptimos en días</td></tr>
-<tr><td>Daba valores negativos o irreales (CAT cash óptimo −$115B)</td><td>Por construcción nunca negativo</td></tr>
+<tr><td>Daba valores negativos o irreales (Caterpillar con cash óptimo de −$115B)</td><td>Por construcción nunca negativo</td></tr>
 <tr><td>Extrapolaba fuera del rango</td><td>Personalizado al tamaño de la empresa</td></tr>
 </table>
 
