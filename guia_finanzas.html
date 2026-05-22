@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Guía de estudio - Proyecto Finanzas (Working Capital + ML)</title>
+<style>
+  :root {
+    --azul: #1e3a8a;
+    --azul-claro: #3b82f6;
+    --gris-fondo: #f8fafc;
+    --gris-borde: #e2e8f0;
+    --gris-texto: #334155;
+    --verde: #059669;
+    --rojo: #dc2626;
+    --amarillo: #d97706;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 30px 40px;
+    line-height: 1.65;
+    color: var(--gris-texto);
+    background: white;
+  }
+  h1 {
+    color: var(--azul);
+    border-bottom: 3px solid var(--azul);
+    padding-bottom: 12px;
+    margin-top: 40px;
+  }
+  h2 {
+    color: var(--azul);
+    margin-top: 36px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--gris-borde);
+  }
+  h3 {
+    color: var(--azul-claro);
+    margin-top: 24px;
+  }
+  h4 {
+    color: var(--gris-texto);
+    margin-top: 18px;
+    margin-bottom: 6px;
+  }
+  code {
+    background: var(--gris-fondo);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+    font-size: 0.92em;
+    color: #be185d;
+  }
+  pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 14px 18px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.9em;
+    line-height: 1.5;
+  }
+  pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 14px 0;
+    font-size: 0.95em;
+  }
+  th, td {
+    border: 1px solid var(--gris-borde);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  th {
+    background: var(--gris-fondo);
+    color: var(--azul);
+    font-weight: 600;
+  }
+  tr:nth-child(even) td {
+    background: #fcfcfd;
+  }
+  .formula {
+    background: #fef3c7;
+    border-left: 4px solid var(--amarillo);
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-family: "SF Mono", Monaco, monospace;
+    border-radius: 4px;
+  }
+  .defensa {
+    background: #ecfdf5;
+    border-left: 4px solid var(--verde);
+    padding: 14px 18px;
+    margin: 18px 0;
+    border-radius: 4px;
+  }
+  .defensa::before {
+    content: "Defensa";
+    font-weight: 700;
+    color: var(--verde);
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.85em;
+    letter-spacing: 1px;
+  }
+  .clave {
+    background: #eff6ff;
+    border-left: 4px solid var(--azul-claro);
+    padding: 12px 16px;
+    margin: 14px 0;
+    border-radius: 4px;
+  }
+  .clave::before {
+    content: "Idea clave";
+    font-weight: 700;
+    color: var(--azul-claro);
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.85em;
+    letter-spacing: 1px;
+  }
+  .ejemplo {
+    background: #fafaf9;
+    border: 1px solid var(--gris-borde);
+    padding: 12px 18px;
+    margin: 14px 0;
+    border-radius: 4px;
+  }
+  .ejemplo::before {
+    content: "Ejemplo";
+    font-weight: 700;
+    color: var(--gris-texto);
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.85em;
+    letter-spacing: 1px;
+  }
+  .alerta {
+    background: #fef2f2;
+    border-left: 4px solid var(--rojo);
+    padding: 12px 16px;
+    margin: 14px 0;
+    border-radius: 4px;
+  }
+  .toc {
+    background: var(--gris-fondo);
+    padding: 20px 30px;
+    border-radius: 8px;
+    border: 1px solid var(--gris-borde);
+  }
+  .toc h2 {
+    margin-top: 0;
+    border: none;
+    padding: 0;
+  }
+  .toc ol {
+    margin: 10px 0;
+    padding-left: 25px;
+  }
+  .toc ol ol {
+    margin: 4px 0;
+  }
+  .toc a {
+    color: var(--azul);
+    text-decoration: none;
+  }
+  .toc a:hover {
+    text-decoration: underline;
+  }
+  .meta {
+    color: #94a3b8;
+    font-size: 0.9em;
+    margin-bottom: 30px;
+  }
+  ul li, ol li { margin: 4px 0; }
+  hr {
+    border: none;
+    border-top: 1px solid var(--gris-borde);
+    margin: 40px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>Guía de estudio — Proyecto Finanzas (Working Capital + ML)</h1>
+<div class="meta">Resumen completo de los conceptos cubiertos, en orden pedagógico.</div>
+
+<div class="toc">
+<h2>Índice</h2>
+<ol>
+  <li><a href="#pipeline"><strong>Pipeline del proyecto en 13 pasos</strong> (resumen ejecutivo)</a></li>
+  <li><a href="#parte-1">PARTE I — Fundamentos financieros</a>
+    <ol>
+      <li><a href="#ccc">El Cash Conversion Cycle (CCC)</a></li>
+      <li><a href="#atrapado">Dinero "atrapado": qué significa</a></li>
+      <li><a href="#palancas">Las 3 palancas: DIO, DSO, DPO</a></li>
+    </ol>
+  </li>
+  <li><a href="#parte-2">PARTE II — Datos</a>
+    <ol>
+      <li><a href="#origen">De dónde salen los datos (SEC, Yahoo, yfinance)</a></li>
+      <li><a href="#config">Configuración: TICKERS_CONFIG y BALANCE_MAP</a></li>
+      <li><a href="#descarga">Descarga: extraer_serie y descargar_empresa</a></li>
+      <li><a href="#ratios">Cálculo de ratios</a></li>
+    </ol>
+  </li>
+  <li><a href="#parte-3">PARTE III — Preprocesamiento</a>
+    <ol>
+      <li><a href="#eda">EDA: por qué boxplots</a></li>
+      <li><a href="#winsor">Winsorización (qué, por qué, cuándo, cuánto)</a></li>
+      <li><a href="#robust">RobustScaler</a></li>
+    </ol>
+  </li>
+  <li><a href="#parte-4">PARTE IV — Modelado</a>
+    <ol>
+      <li><a href="#k">Selección de k: 4 métricas</a></li>
+      <li><a href="#pca">PCA y Scree plot</a></li>
+      <li><a href="#jerarquico">Clustering jerárquico y ARI</a></li>
+    </ol>
+  </li>
+  <li><a href="#parte-5">PARTE V — Módulos 2 y 3</a>
+    <ol>
+      <li><a href="#m2">Módulo 2: targets por cluster</a></li>
+      <li><a href="#m3">Módulo 3: simulador y cash liberado</a></li>
+    </ol>
+  </li>
+</ol>
+</div>
+
+<hr>
+
+<h2 id="pipeline">Pipeline del proyecto en 13 pasos</h2>
+
+<p>Resumen del flujo completo de principio a fin. Cada paso enlaza a la sección de la guía donde se explica en detalle.</p>
+
+<table>
+<tr><th style="width: 60px;">Paso</th><th>Acción</th><th>Resultado</th><th style="width: 110px;">Detalle</th></tr>
+
+<tr>
+  <td><strong>1</strong></td>
+  <td>Configurar lista de 25 tickers en 7 sectores y los mapas de alias para yfinance.</td>
+  <td>Estructura de tickers que el pipeline va a recorrer.</td>
+  <td><a href="#config">§5</a></td>
+</tr>
+
+<tr>
+  <td><strong>2</strong></td>
+  <td>Descargar balance e income statement desde Yahoo Finance vía yfinance. Tomar los últimos 4 años fiscales reales. Si falta dato crítico, descartar fila (sin imputación).</td>
+  <td><code>df_raw</code> con 96 observaciones reales de 24 empresas.</td>
+  <td><a href="#descarga">§6</a></td>
+</tr>
+
+<tr>
+  <td><strong>3</strong></td>
+  <td>Calcular ratios DIO, DSO, DPO, CCC y porcentajes (cash_pct, receivables_pct, inventory_pct). Guardar dataset en CSV.</td>
+  <td><code>df</code> con 7 features para clustering + columnas absolutas en USD.</td>
+  <td><a href="#ratios">§7</a></td>
+</tr>
+
+<tr>
+  <td><strong>4</strong></td>
+  <td>EDA — boxplots de cada feature para detectar outliers y verificar coherencia.</td>
+  <td>Detección de outliers estructurales (Ford en DSO, CAT en DIO).</td>
+  <td><a href="#eda">§8</a></td>
+</tr>
+
+<tr>
+  <td><strong>5</strong></td>
+  <td>Winsorización al 2.5% por cola sobre cada feature para amortiguar extremos sin perder observaciones.</td>
+  <td><code>X_wins</code> con outliers extremos recortados a percentiles 2.5 y 97.5.</td>
+  <td><a href="#winsor">§9</a></td>
+</tr>
+
+<tr>
+  <td><strong>6</strong></td>
+  <td>Escalado con RobustScaler (mediana e IQR) para que todas las features pesen igual en la distancia euclidiana.</td>
+  <td><code>X_scaled</code> con mediana=0 e IQR=1 por feature.</td>
+  <td><a href="#robust">§10</a></td>
+</tr>
+
+<tr>
+  <td><strong>7</strong></td>
+  <td>Selección de k probando k = 2..8 con cuatro métricas: inercia (codo), silhouette, Davies-Bouldin, Calinski-Harabasz. Voto por mayoría.</td>
+  <td>k = 6 elegido por silhouette máximo (0.456).</td>
+  <td><a href="#k">§11</a></td>
+</tr>
+
+<tr>
+  <td><strong>8</strong></td>
+  <td>Entrenar K-means con k=6 y asignar cluster a cada observación empresa-año.</td>
+  <td>Columna <code>cluster</code> en <code>df</code> con valores 0–5.</td>
+  <td><a href="#k">§11</a></td>
+</tr>
+
+<tr>
+  <td><strong>9</strong></td>
+  <td>PCA con 3 componentes para visualización (vista 3D + 3 proyecciones 2D pareadas). El clustering NO usa PCA — usa los 7 features escalados.</td>
+  <td>85.8% de varianza acumulada capturada para visualizar.</td>
+  <td><a href="#pca">§12</a></td>
+</tr>
+
+<tr>
+  <td><strong>10</strong></td>
+  <td>Validación cruzada con clustering jerárquico Ward. Comparar las dos asignaciones con Adjusted Rand Index (ARI).</td>
+  <td>ARI = 0.841 → acuerdo alto, clusters robustos.</td>
+  <td><a href="#jerarquico">§13</a></td>
+</tr>
+
+<tr>
+  <td><strong>11</strong></td>
+  <td>Calcular perfil de cada cluster (centroide), identificar cluster eficiente como el de menor CCC promedio.</td>
+  <td>Cluster 1 (AAPL, DELL, HPQ, PEP) es el más eficiente con CCC = −39.5d.</td>
+  <td><a href="#ccc">§1</a></td>
+</tr>
+
+<tr>
+  <td><strong>12</strong></td>
+  <td>Módulo 2 — para cada cluster, tomar top 30% por menor CCC y calcular medianas de DIO, DSO, DPO como targets. Convertir a USD usando revenue y COGS de cada empresa.</td>
+  <td><code>targets_por_cluster</code> con los benchmarks operativos por cluster.</td>
+  <td><a href="#m2">§14</a></td>
+</tr>
+
+<tr>
+  <td><strong>13</strong></td>
+  <td>Módulo 3 — Simulador interactivo con sliders DIO/DSO/DPO. Construido como app web en Streamlit con KPIs, gauge de CCC, tablas con coloreado direccional, y receta operativa.</td>
+  <td>App ejecutable con <code>streamlit run app.py</code>.</td>
+  <td><a href="#m3">§15</a></td>
+</tr>
+
+</table>
+
+<div class="clave">
+Los pasos 1–3 son adquisición de datos. Los pasos 4–6 son preprocesamiento. Los pasos 7–11 son modelado y validación del clustering. Los pasos 12–13 son los entregables operativos: predicción del óptimo y simulador interactivo.
+</div>
+
+<hr>
+
+<h1 id="parte-1">PARTE I — Fundamentos financieros</h1>
+
+<h2 id="ccc">1. El Cash Conversion Cycle (CCC)</h2>
+
+<div class="formula">
+CCC = DIO + DSO − DPO
+</div>
+
+<p>Es un solo número que resume todo el ciclo operativo. Responde la pregunta:</p>
+
+<div class="clave">
+¿Cuántos días tiene mi dinero atrapado en la operación, sin generar nada?
+</div>
+
+<h4>Interpretación</h4>
+<ul>
+  <li><strong>CCC alto</strong> → necesitás mucho efectivo para operar (capital atrapado).</li>
+  <li><strong>CCC bajo</strong> → necesitás poco efectivo (rotación rápida).</li>
+  <li><strong>CCC negativo</strong> → los proveedores te financian. No necesitás efectivo propio. Apple, Walmart, Amazon están en este territorio.</li>
+</ul>
+
+<h4>Por qué fue NUESTRA métrica de eficiencia</h4>
+<ol>
+  <li><strong>Es LA métrica del marco teórico</strong> de working capital — no es inventada.</li>
+  <li><strong>Combina las 3 palancas</strong> (DIO, DSO, DPO) con el signo correcto en un solo número.</li>
+  <li><strong>Es comparable entre industrias</strong> — farma y retail pueden compararse.</li>
+  <li><strong>Tiene traducción directa a USD</strong>: cash atrapado ≈ CCC × (revenue/365).</li>
+</ol>
+
+<div class="defensa">
+"Usamos el CCC como métrica de eficiencia porque es la definición operativa del marco teórico de capital de trabajo: integra DIO, DSO y DPO con el signo económico correcto en un único indicador comparable entre industrias y traducible directamente a USD de capital liberado."
+</div>
+
+<h2 id="atrapado">2. Dinero "atrapado": qué significa</h2>
+
+<div class="clave">
+Dinero atrapado = dinero que es tuyo pero NO está disponible. Existe pero no podés gastarlo, está mutado en inventario o en una deuda que un cliente todavía no te pagó.
+</div>
+
+<div class="ejemplo">
+<strong>Vendedor con $100 en el bolsillo:</strong>
+<ol>
+  <li><strong>Día 1:</strong> Comprás stock por $60. Billetera: $40. Tenés un producto que vale $60 en el depósito. → Esos $60 están atrapados en <em>inventario</em>.</li>
+  <li><strong>Día 5:</strong> Vendés el producto por $100. Cliente paga con cheque a 7 días. Billetera: $40. → Esos $100 están atrapados como <em>cuentas por cobrar</em>.</li>
+  <li><strong>Día 12:</strong> El cliente paga. Billetera: $140. → Ahora SÍ tenés los $100 disponibles.</li>
+</ol>
+</div>
+
+<p>El día 5, si aparece una oportunidad de comprar otro producto rebajado por $80, no podés tomarla. Tenés $100 prometidos pero solo $40 disponibles. <strong>Ese es el costo del dinero atrapado: oportunidades perdidas.</strong></p>
+
+<h2 id="palancas">3. Las 3 palancas: DIO, DSO, DPO</h2>
+
+<table>
+<tr><th>Palanca</th><th>Fórmula</th><th>Mide</th><th>Mejor cuando</th><th>Donde está el cash</th></tr>
+<tr><td><strong>DIO</strong></td><td>(Inventario / COGS) × 365</td><td>Días para vender el inventario</td><td><strong>bajo</strong></td><td>en el depósito</td></tr>
+<tr><td><strong>DSO</strong></td><td>(AR / Revenue) × 365</td><td>Días para cobrar al cliente</td><td><strong>bajo</strong></td><td>en cuentas por cobrar</td></tr>
+<tr><td><strong>DPO</strong></td><td>(AP / COGS) × 365</td><td>Días para pagar al proveedor</td><td><strong>alto</strong></td><td>el proveedor te financia</td></tr>
+</table>
+
+<h3>Ejemplos físicos de cada palanca</h3>
+
+<h4>DIO — bajar libera cash del depósito</h4>
+<div class="ejemplo">
+Librería con COGS = $365K/año = $1,000/día.<br>
+DIO = 30 días → inventario = $30,000 parado en el depósito.<br>
+Bajás DIO a 20 días → inventario = $20,000.<br>
+<strong>Liberás $10,000</strong> (10 días × $1,000) que ya no necesitás tener en mercadería.
+</div>
+
+<h4>DSO — bajar libera cash del limbo de cobros</h4>
+<div class="ejemplo">
+Librería con Revenue = $365K/año = $1,000/día.<br>
+DSO = 60 días → te deben $60,000 (clientes pagan a 2 meses).<br>
+Bajás DSO a 30 días (descuento por pago contado, tarjeta) → te deben $30,000.<br>
+<strong>Liberás $30,000</strong> que pasaron de "promesa de pago" a cash real.
+</div>
+
+<h4>DPO — SUBIR libera cash del proveedor</h4>
+<div class="ejemplo">
+Librería con COGS = $1,000/día.<br>
+DPO = 30 días → debés $30,000 al proveedor (cash que está en tu cuenta).<br>
+Negociás pago a 60 días → debés $60,000.<br>
+<strong>Liberás $30,000</strong> que el proveedor te financia gratis durante 30 días más.
+</div>
+
+<div class="clave">
+DPO es <strong>al revés</strong>: subir es bueno. Las otras dos (DIO, DSO) bajar es bueno.
+</div>
+
+<hr>
+
+<h1 id="parte-2">PARTE II — Datos</h1>
+
+<h2 id="origen">4. De dónde salen los datos</h2>
+
+<p>Los valores absolutos (revenue, COGS, cash, inventario, AR, AP, etc.) son <strong>estados financieros auditados</strong>. Cadena completa:</p>
+
+<pre><code>Empresa (WMT, AAPL, etc.)
+   ↓ obligación legal (Securities Act 1933)
+10-K anual presentado a la SEC
+   ↓ disponible en EDGAR (sec.gov)
+Yahoo Finance digiere y expone vía API
+   ↓
+yfinance (librería Python) descarga
+   ↓
+Nuestro código (descargar_empresa)
+   ↓
+df_raw</code></pre>
+
+<h4>Mapeo entre columnas y reportes</h4>
+<table>
+<tr><th>Columna</th><th>Estado financiero</th><th>Línea del reporte</th></tr>
+<tr><td>revenue</td><td>Income Statement</td><td>"Total Revenue"</td></tr>
+<tr><td>cogs</td><td>Income Statement</td><td>"Cost Of Revenue"</td></tr>
+<tr><td>cash</td><td>Balance Sheet</td><td>"Cash And Cash Equivalents"</td></tr>
+<tr><td>accounts_receivable</td><td>Balance Sheet</td><td>"Accounts Receivable"</td></tr>
+<tr><td>inventory</td><td>Balance Sheet</td><td>"Inventory"</td></tr>
+<tr><td>accounts_payable</td><td>Balance Sheet</td><td>"Accounts Payable"</td></tr>
+</table>
+
+<div class="defensa">
+"Los datos son valores contables auditados extraídos de los reportes 10-K que cada empresa presenta obligatoriamente ante la SEC. Los descargamos vía yfinance, que normaliza la información que Yahoo obtiene de EDGAR. Son datos públicos auditados por las Big Four para casi todas las empresas del dataset."
+</div>
+
+<h2 id="config">5. Configuración: TICKERS_CONFIG y mapas de alias</h2>
+
+<h4>TICKERS_CONFIG</h4>
+<p>Diccionario <code>{sector: [tickers]}</code>. La <strong>sectorización es manual</strong> (no la usa el clustering, solo organiza el log). Elegimos 7 sectores buscando <strong>diversidad en perfiles de working capital</strong>:</p>
+
+<table>
+<tr><th>Sector</th><th>Perfil esperado de WC</th></tr>
+<tr><td>Retail Tradicional</td><td>DIO alto, DSO bajo, DPO medio</td></tr>
+<tr><td>Fast Fashion</td><td>Similar a retail pero más volátil</td></tr>
+<tr><td>Automotriz</td><td>DSO altísimo (venden a crédito)</td></tr>
+<tr><td>Tech Hardware</td><td>DPO altísimo, DIO bajo (cluster eficiente)</td></tr>
+<tr><td>Industriales</td><td>DIO alto, DSO alto</td></tr>
+<tr><td>Farma</td><td>DIO alto (stock seguridad)</td></tr>
+<tr><td>Bebidas y Consumo</td><td>DIO bajo, DPO alto</td></tr>
+</table>
+
+<h4>BALANCE_MAP / INCOME_MAP</h4>
+<p>Para cada variable contable, una <strong>lista de alias posibles</strong>. Yahoo Finance no es consistente entre empresas (a veces "Cash And Cash Equivalents", a veces solo "Cash"). La función <code>extraer_serie</code> recorre la lista y devuelve el primer alias que matchee.</p>
+
+<h2 id="descarga">6. Descarga: extraer_serie y descargar_empresa</h2>
+
+<h4>extraer_serie(df, alias_list)</h4>
+<p>Recorre la lista de alias y devuelve la primera fila del DataFrame financiero que matchee. Si nada matchea, devuelve <code>None</code> (lógica defensiva).</p>
+
+<h4>descargar_empresa(ticker, sector)</h4>
+<p>Lo importante:</p>
+<ul>
+  <li><strong>Reintentos</strong>: hasta 2 intentos con <code>time.sleep(1.5)</code> entre fallos. yfinance no es API garantizada.</li>
+  <li><strong>Intersección de fechas</strong>: <code>set(bs.columns) &amp; set(inc.columns)</code> garantiza que balance e income statement estén alineados temporalmente. Sin esto, podrías mezclar inventario 2023 con COGS 2024.</li>
+  <li><strong>Sin imputación</strong>: si falta un campo crítico (<code>revenue, cogs, inventory, accounts_receivable, accounts_payable</code>), se descarta la fila completa. Preferimos <strong>menos data real que más data sintética</strong>.</li>
+</ul>
+
+<div class="clave">
+La intersección de fechas y el filtro de campos críticos son la corrección clave vs. la versión anterior que imputaba con la media, fabricando 7 años falsos por cada año real.
+</div>
+
+<h2 id="ratios">7. Cálculo de ratios</h2>
+
+<div class="formula">
+DIO = (Inventario / COGS) × 365<br>
+DSO = (AR / Revenue) × 365<br>
+DPO = (AP / COGS) × 365<br>
+CCC = DIO + DSO − DPO<br><br>
+cash_pct        = Cash / current_assets × 100<br>
+receivables_pct = AR   / current_assets × 100<br>
+inventory_pct   = Inv  / current_assets × 100
+</div>
+
+<p>Los porcentajes son <strong>features adicionales</strong> que capturan composición de activo corriente. Dos empresas con el mismo CCC pueden tener composiciones muy distintas (una conservadora con mucho cash, otra atrapada en inventario).</p>
+
+<hr>
+
+<h1 id="parte-3">PARTE III — Preprocesamiento</h1>
+
+<h2 id="eda">8. EDA: por qué boxplots</h2>
+
+<p><strong>EDA</strong> (Exploratory Data Analysis) es práctica estándar antes de cualquier modelo. Sirve para:</p>
+<ul>
+  <li><strong>Reality-check</strong>: ¿los datos descargados son coherentes?</li>
+  <li><strong>Detectar outliers</strong> que dominen K-means.</li>
+  <li><strong>Entender distribuciones</strong> para elegir el escalado.</li>
+</ul>
+
+<h4>Por qué boxplot</h4>
+<p>En un solo gráfico te dice 3 cosas: dónde está el centro (mediana), qué tan dispersos (caja), si hay outliers (puntos sueltos). Es invariante a elección de bins y permite comparar 7 variables en una figura.</p>
+
+<h4>Qué buscar en los plots</h4>
+<ul>
+  <li>¿La caja está donde tiene sentido? (DPO mediana ~60d ✓, no 500d)</li>
+  <li>¿Puntos lejos de la caja? = outliers (4 en DSO = Ford, 4 en DIO = CAT)</li>
+  <li>¿Caja chica o gigante? Caja gigante = variación grande = clusters más fácil de armar</li>
+</ul>
+
+<h2 id="winsor">9. Winsorización</h2>
+
+<p>Viene de <strong>Charles P. Winsor</strong> (biostatistician, 1895-1951), nombrada por John Tukey en los 40.</p>
+
+<div class="clave">
+Winsorización = reemplazar outliers con los valores del percentil aceptado. <strong>No se borra nada</strong>, solo se "achatan" los extremos.
+</div>
+
+<div class="ejemplo">
+Lista: [5, 7, 8, 10, 12, 15, 18, 20, 25, <strong>130</strong>]<br>
+Winsorizar al 10% por cola:<br>
+→ [<strong>7</strong>, 7, 8, 10, 12, 15, 18, 20, 25, <strong>25</strong>]
+</div>
+
+<h4>Por qué hacerlo</h4>
+<table>
+<tr><th>Opción</th><th>Problema</th></tr>
+<tr><td>Borrar outliers</td><td>Perdés observaciones (con n=96 cada una cuenta)</td></tr>
+<tr><td>Dejarlos como están</td><td>K-means usa distancias → outlier domina centroide</td></tr>
+<tr><td><strong>Winsorizar</strong></td><td>Conservás todas las filas, outlier deja de dominar</td></tr>
+</table>
+
+<h4>Cuándo aplicarla (regla 1-2-3)</h4>
+<ol>
+  <li>Boxplot muestra puntos sueltos lejos de la caja.</li>
+  <li>Vas a usar modelo basado en distancias (K-means, KNN, PCA).</li>
+  <li>Ratio max/mediana &gt; 5 en al menos una variable.</li>
+</ol>
+
+<h4>Qué porcentaje usar</h4>
+<table>
+<tr><th>n (filas)</th><th>% por cola</th></tr>
+<tr><td>&lt; 50</td><td>1%</td></tr>
+<tr><td><strong>50–200</strong></td><td><strong>2.5%</strong> ← nuestro caso (n=96)</td></tr>
+<tr><td>200–1000</td><td>5%</td></tr>
+<tr><td>&gt; 1000</td><td>5–10%</td></tr>
+</table>
+
+<div class="clave">
+Para tu dataset: el ratio max/mediana en DSO = 6.45 (Ford 130/20) y en CCC = 6.90 confirman que <strong>se justifica winsorizar</strong>. 2.5% por cola recorta ~2-3 valores extremos sin afectar el centro.
+</div>
+
+<h4>Outliers estructurales</h4>
+<p>Los outliers de tu dataset (Ford con DSO ~120, CAT con DIO 200+) <strong>no son errores</strong> — son outliers estructurales (empresas que por modelo de negocio son distintas). Aparecen 4 veces porque cada empresa tiene 4 años fiscales en el dataset.</p>
+
+<div class="defensa">
+"Justificamos winsorización porque tres features (DSO, DIO, CCC) cumplen la regla max/mediana &gt; 5 y muestran salto evidente entre Q3 y máximo. La std del orden del IQR confirma colas pesadas. Con n=96 elegimos 2.5% por cola: amortigua los extremos sin eliminar los outliers estructurales, que son justamente los que queremos que el clustering identifique como cluster propio."
+</div>
+
+<h2 id="robust">10. RobustScaler</h2>
+
+<h4>Por qué escalar</h4>
+<p>K-means usa distancia euclidiana. Si DSO va de 0 a 131 y cash_pct va de 0 a 65, DSO domina la distancia. Escalar pone todas las variables en la misma regla.</p>
+
+<h4>StandardScaler vs RobustScaler</h4>
+<table>
+<tr><th></th><th>StandardScaler</th><th>RobustScaler</th></tr>
+<tr><td>Fórmula</td><td>(x − media) / std</td><td>(x − mediana) / IQR</td></tr>
+<tr><td>Resultado</td><td>media=0, std=1</td><td>mediana=0, IQR=1</td></tr>
+<tr><td>Sensible a outliers</td><td>SÍ (std se infla)</td><td>NO (mediana e IQR ignoran colas)</td></tr>
+<tr><td>Apropiado para finanzas</td><td>No tanto</td><td><strong>Sí ✓</strong></td></tr>
+</table>
+
+<div class="ejemplo">
+DSO = [5, 20, 130]<br>
+<strong>StandardScaler</strong>: [-0.68, -0.46, 1.14] → las "normales" (5 y 20) quedan casi pegadas.<br>
+<strong>RobustScaler</strong>: [-0.12, 0, 0.88] → las "normales" mantienen distinción.
+</div>
+
+<div class="defensa">
+"Escalamos porque K-means usa distancia euclidiana y nuestras 7 features tienen escalas muy distintas. Elegimos RobustScaler porque usa mediana e IQR, que son insensibles a outliers — apropiado para datos financieros donde los outliers son estructurales y legítimos."
+</div>
+
+<hr>
+
+<h1 id="parte-4">PARTE IV — Modelado</h1>
+
+<h2 id="k">11. Selección de k: 4 métricas</h2>
+
+<table>
+<tr><th>Métrica</th><th>Mejor cuando</th><th>Mide</th></tr>
+<tr><td><strong>Inercia (codo)</strong></td><td>Quiebre visible</td><td>Compactness dentro de clusters</td></tr>
+<tr><td><strong>Silhouette</strong></td><td>Más alto (cerca de 1)</td><td>Separación entre clusters</td></tr>
+<tr><td><strong>Davies-Bouldin</strong></td><td>Más bajo</td><td>Similitud cluster vs vecino más cercano</td></tr>
+<tr><td><strong>Calinski-Harabasz</strong></td><td>Más alto</td><td>Varianza entre / varianza dentro</td></tr>
+</table>
+
+<h4>Cómo decidir con las 4 juntas</h4>
+<ul>
+  <li>Si las 4 coinciden en el mismo k → decisión muy sólida.</li>
+  <li>Si 3 de 4 coinciden → voto por mayoría.</li>
+  <li>Si discrepan → priorizar interpretabilidad (silhouette + DBI).</li>
+</ul>
+
+<div class="clave">
+En tu corrida, k=6 quedó seleccionado por silhouette (0.456 era el más alto). Con las 4 métricas combinadas y el voto por mayoría, podés confirmar que es la decisión correcta.
+</div>
+
+<h2 id="pca">12. PCA y Scree plot</h2>
+
+<h4>Para qué se usa PCA en tu proyecto</h4>
+<p>NO se usa para clusterizar (K-means corre sobre los 7 features escalados). Se usa SOLO para <strong>visualizar los clusters en 2D o 3D</strong>.</p>
+
+<h4>Scree plot</h4>
+<p>Muestra qué porcentaje de varianza captura cada componente. Reglas estándar para elegir cuántos componentes:</p>
+
+<table>
+<tr><th>Regla</th><th>Descripción</th><th>Aplicado a tu dataset</th></tr>
+<tr><td><strong>Codo de Cattell</strong></td><td>Buscar el quiebre visual</td><td>Entre PC5 y PC6 (cae a 0.5%)</td></tr>
+<tr><td><strong>Kaiser</strong></td><td>Componentes con varianza &gt; 1/n_features</td><td>3 PCs (PC1, PC2, PC3 con &gt; 14.3%)</td></tr>
+<tr><td><strong>Umbral 80%</strong></td><td>Mínimo de varianza acumulada</td><td>3 PCs (85.8%)</td></tr>
+</table>
+
+<h4>Tus números</h4>
+<table>
+<tr><th>PC</th><th>Var individual</th><th>Var acumulada</th></tr>
+<tr><td>PC1</td><td>45.4%</td><td>45.4%</td></tr>
+<tr><td>PC2</td><td>23.4%</td><td>68.8%</td></tr>
+<tr><td>PC3</td><td>17.0%</td><td><strong>85.8%</strong></td></tr>
+<tr><td>PC4</td><td>9.2%</td><td>95.0%</td></tr>
+<tr><td>PC5</td><td>4.4%</td><td>99.4%</td></tr>
+</table>
+
+<div class="defensa">
+"El scree plot confirma que tres componentes capturan el 85.8% de la varianza, coincidiendo con el criterio de Kaiser y el umbral del 80%. Usamos tres PCs para la visualización porque mejora la separación visual de los clusters respecto a la proyección 2D plana, donde se perdían 17 puntos porcentuales de varianza."
+</div>
+
+<h2 id="jerarquico">13. Clustering jerárquico y ARI</h2>
+
+<h4>Por qué hacerlo</h4>
+<p>Validación cruzada del clustering. Si un algoritmo totalmente distinto (jerárquico) llega a los mismos grupos que K-means, los clusters son <strong>reales, no artefacto del algoritmo</strong>.</p>
+
+<h4>Clustering jerárquico aglomerativo (Ward)</h4>
+<p>Empieza con cada punto como su propio cluster y va fusionando los dos clusters más cercanos hasta unir todos. Ward elige fusiones que minimizan el aumento de varianza total.</p>
+
+<h4>ARI: Adjusted Rand Index</h4>
+
+<div class="clave">
+ARI = ¿cuánto coinciden dos formas de agrupar las mismas cosas? Ajustado para que el acuerdo por azar no cuente.
+</div>
+
+<h4>Cómo se calcula (con ejemplo)</h4>
+<p>5 empresas (A, B, C, D, E). Dos métodos las agrupan:</p>
+
+<table>
+<tr><th>Par</th><th>K-means</th><th>Jerárquico</th><th>Acuerdo</th></tr>
+<tr><td>A-B</td><td>juntos</td><td>juntos</td><td>SÍ</td></tr>
+<tr><td>A-C</td><td>juntos</td><td>separados</td><td>NO</td></tr>
+<tr><td>A-D</td><td>separados</td><td>separados</td><td>SÍ</td></tr>
+<tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+</table>
+
+<p>Si coincidieron en 6 de 10 pares → Rand Index = 0.6.</p>
+
+<p>Pero por azar el RI esperado sería 0.52 (con esos tamaños de grupos). Por eso:</p>
+
+<div class="formula">
+ARI = (RI − RI_esperado) / (1 − RI_esperado)<br>
+ARI = (0.60 − 0.52) / (1 − 0.52) = 0.17
+</div>
+
+<h4>Cómo se interpreta</h4>
+<table>
+<tr><th>ARI</th><th>Lectura</th></tr>
+<tr><td>1.0</td><td>Acuerdo perfecto</td></tr>
+<tr><td>0.7–1.0</td><td>Acuerdo alto (estructura sólida)</td></tr>
+<tr><td>0.4–0.7</td><td>Acuerdo moderado</td></tr>
+<tr><td>~0</td><td>Como tirar moneda</td></tr>
+</table>
+
+<div class="clave">
+En tu corrida: <strong>ARI = 0.841</strong> → ~84% del acuerdo no es atribuible al azar. Los clusters son robustos.
+</div>
+
+<div class="defensa">
+"Validamos el clustering de K-means con clustering jerárquico Ward y medimos el acuerdo con Adjusted Rand Index. Obtuvimos ARI = 0.841, indicando acuerdo alto y robustez del clustering. El ARI es la métrica estándar porque ajusta por acuerdo esperado por azar, a diferencia del Rand Index simple."
+</div>
+
+<hr>
+
+<h1 id="parte-5">PARTE V — Módulos 2 y 3</h1>
+
+<h2 id="m2">14. Módulo 2: targets por cluster</h2>
+
+<h4>Cambio conceptual vs versión anterior</h4>
+<table>
+<tr><th>Antes (Ridge en $ absolutos)</th><th>Ahora (ratios)</th></tr>
+<tr><td>Predecía inventario, AR, cash en USD</td><td>Predice DIO, DSO, DPO óptimos en días</td></tr>
+<tr><td>Daba valores negativos o irreales (CAT cash óptimo −$115B)</td><td>Por construcción nunca negativo</td></tr>
+<tr><td>Extrapolaba fuera del rango</td><td>Personalizado al tamaño de la empresa</td></tr>
+</table>
+
+<h4>Lógica del cálculo</h4>
+<ol>
+  <li>Para cada cluster, tomar el <strong>top 30%</strong> de observaciones por menor CCC (las más eficientes).</li>
+  <li>Calcular la <strong>mediana</strong> de sus DIO, DSO, DPO → son los "targets en días".</li>
+  <li>Para una empresa, convertir esos días a USD usando SU revenue y COGS actuales.</li>
+</ol>
+
+<h4>Las fórmulas (despeje algebraico)</h4>
+<div class="formula">
+inv_optimo = dio_target × cogs    / 365<br>
+ar_optimo  = dso_target × revenue / 365<br>
+ap_optimo  = dpo_target × cogs    / 365
+</div>
+
+<h4>De dónde sale el despeje</h4>
+<table>
+<tr><th>Ratio original</th><th>Despejando el valor</th></tr>
+<tr><td>DIO = (inv / COGS) × 365</td><td>inv = DIO × COGS / 365</td></tr>
+<tr><td>DSO = (AR / Revenue) × 365</td><td>AR = DSO × Revenue / 365</td></tr>
+<tr><td>DPO = (AP / COGS) × 365</td><td>AP = DPO × COGS / 365</td></tr>
+</table>
+
+<h4>Verificación dimensional</h4>
+<pre><code>inv = [días] × [USD/año] / [días/año]
+    = [días] × [USD/año] × [año/días]
+    = [USD]  ✓</code></pre>
+
+<h4>Por qué mediana y no media</h4>
+<p>Con n_train chico (3-8 obs por cluster en el top), la media es muy sensible a un valor raro. La mediana es robusta.</p>
+
+<h4>Por qué COGS para DIO/DPO y Revenue para DSO</h4>
+<p>Por la definición de cada ratio: inventario y AP se relacionan con lo que comprás/producís (COGS); AR se relaciona con lo que vendés (Revenue).</p>
+
+<div class="defensa">
+"El Módulo 2 implementa benchmarking interno por cluster: identifica el top 30% más eficiente (mediana de DIO/DSO/DPO de las empresas con menor CCC) y proyecta ese estándar a la empresa evaluada usando su propio revenue y COGS. Las fórmulas son despejes algebraicos exactos de las definiciones de DIO, DSO y DPO, dimensionalmente consistentes."
+</div>
+
+<h2 id="m3">15. Módulo 3: simulador y cash liberado</h2>
+
+<h4>Cómo funciona</h4>
+<ol>
+  <li>Detecta el cluster de la empresa: <code>c = int(emp["cluster"])</code></li>
+  <li>Busca los targets de ese cluster: <code>t = targets_por_cluster[c]</code></li>
+  <li>Muestra sliders para que el usuario simule cambios sobre los ratios actuales.</li>
+  <li>Compara la simulación con el target del cluster y genera la receta.</li>
+</ol>
+
+<div class="clave">
+Los targets se usan <strong>tal como salen del cálculo del top-30%</strong>, sin recortes. Si el target del cluster es DPO=134 días (caso real del cluster farma-industrial), lo mostramos como 134 y no como un valor "editado". Es el benchmark real observado en los pares y eso es lo que el analista debe ver.
+</div>
+
+<h4>Fórmula del cash liberado</h4>
+<div class="formula">
+cash_liberado = (CCC_actual − CCC_nuevo) × (revenue / 365)
+</div>
+
+<p>Lectura:</p>
+<ul>
+  <li><code>(CCC_actual − CCC_nuevo)</code> = días que bajaste el CCC.</li>
+  <li><code>(revenue / 365)</code> = ventas de UN día (revenue diario).</li>
+  <li>Multiplicado: días × valor diario = cash total liberado.</li>
+</ul>
+
+<div class="clave">
+El cash liberado NO requiere CCC negativo. Funciona en cualquier rango: lo único que importa es el <strong>cambio</strong> en CCC, no su nivel absoluto.
+</div>
+
+<h4>Cash liberado por cada palanca individual</h4>
+<table>
+<tr><th>Palanca</th><th>USD por día</th><th>Por qué</th></tr>
+<tr><td>DIO</td><td>COGS / 365</td><td>1 día de DIO = 1 día de COGS atrapado en inventario</td></tr>
+<tr><td>DSO</td><td>Revenue / 365</td><td>1 día de DSO = 1 día de Revenue en AR</td></tr>
+<tr><td>DPO</td><td>COGS / 365</td><td>1 día de DPO = 1 día de COGS financiado por proveedor</td></tr>
+</table>
+
+<h4>Ejemplos físicos del cash liberado por palanca</h4>
+
+<div class="ejemplo">
+<strong>DIO — librería con COGS = $1,000/día</strong><br>
+DIO baja de 30 a 20 días → inventario baja de $30,000 a $20,000.<br>
+<strong>Cash liberado = $10,000</strong> (10 días × $1,000)<br>
+<em>El dinero estaba atrapado en el depósito. Al rotar más rápido, queda libre.</em>
+</div>
+
+<div class="ejemplo">
+<strong>DSO — librería con Revenue = $1,000/día</strong><br>
+DSO baja de 60 a 30 días → AR baja de $60,000 a $30,000.<br>
+<strong>Cash liberado = $30,000</strong> (30 días × $1,000)<br>
+<em>El dinero estaba como "promesa de pago". Al cobrar más rápido, entra a tu cuenta.</em>
+</div>
+
+<div class="ejemplo">
+<strong>DPO — librería con COGS = $1,000/día</strong><br>
+DPO sube de 30 a 60 días → AP sube de $30,000 a $60,000.<br>
+<strong>Cash liberado = $30,000</strong><br>
+<em>El proveedor te financia $30,000 más. Ese cash está en tu cuenta porque no se lo mandaste todavía.</em>
+</div>
+
+<h4>Receta del simulador</h4>
+<p>Para cada palanca, tres posibles salidas (no hay zona muerta):</p>
+<ol>
+  <li><strong>Necesita ajuste</strong>: si la diferencia es &gt; 1 día → "Bajar/Subir X días, libera ~$Y M USD"</li>
+  <li><strong>Ya mejor que el target</strong>: si tu nivel ya es mejor → "Mantener"</li>
+  <li><strong>Alineado</strong>: si diferencia &lt; 1 día → "Sin acción necesaria"</li>
+</ol>
+
+<div class="alerta">
+<strong>Por qué umbral de ±1 día:</strong> operativamente, una diferencia de 0.4 días no es accionable. No existe una iniciativa empresarial que diga "vamos a bajar el DSO en 0.4 días". Las palancas se mueven en bloques de semanas.
+</div>
+
+<h4>Brecha estructural</h4>
+<p>Si aún llegando al target del propio cluster queda &gt; 10 días de brecha vs el cluster eficiente global → se reporta como <strong>brecha estructural</strong>: no se cierra con palancas operativas, requiere cambiar modelo de negocio.</p>
+
+<h4>Analogía final del cash</h4>
+<div class="clave">
+Tu cash es agua. Tu negocio es una red de tuberías.
+<ul>
+  <li><strong>DIO</strong> = agua estancada en un tanque (depósito).</li>
+  <li><strong>DSO</strong> = agua en tuberías yendo desde clientes hacia vos.</li>
+  <li><strong>DPO</strong> = agua que va de vos hacia el proveedor pero todavía no llegó.</li>
+  <li><strong>CCC</strong> = cantidad total de agua en circulación. Cuanta menos atrapada, más libre en tu balde principal.</li>
+</ul>
+</div>
+
+<div class="defensa">
+"El Módulo 3 traduce ajustes operativos en USD usando la sensibilidad por palanca: cada día de DIO o DPO equivale a COGS/365 USD, y cada día de DSO a Revenue/365 USD. El cash liberado total es (ΔCCC) × (Revenue/365). Los targets se muestran sin filtros — son la mediana real del top-30% del cluster — para que el analista vea el benchmark verídico observado en empresas comparables, no una versión editada. El simulador diferencia brecha operativa de brecha estructural."
+</div>
+
+<hr>
+
+<h2>Resumen final: las palabras clave para defensa</h2>
+
+<table>
+<tr><th>Tema</th><th>Palabras clave</th></tr>
+<tr><td>CCC</td><td>integra las 3 palancas, comparable entre industrias, traducible a USD</td></tr>
+<tr><td>Datos</td><td>10-K, SEC EDGAR, datos auditados, alias múltiples por inconsistencia de Yahoo</td></tr>
+<tr><td>Descarga</td><td>intersección de fechas, sin imputación, dataset 100% real</td></tr>
+<tr><td>Winsorización</td><td>Winsor, Tukey, percentil, conserva n, robusta a outliers estructurales</td></tr>
+<tr><td>RobustScaler</td><td>mediana, IQR, insensible a outliers, apropiado para finanzas</td></tr>
+<tr><td>Selección k</td><td>elbow, silhouette, Davies-Bouldin, Calinski-Harabasz, voto mayoría</td></tr>
+<tr><td>PCA</td><td>Kaiser, scree plot, umbral 80%, 3 PCs capturan 85.8%</td></tr>
+<tr><td>Jerárquico</td><td>Ward, validación cruzada, ARI = 0.841, ajuste por azar</td></tr>
+<tr><td>Módulo 2</td><td>benchmarking interno, despeje algebraico, mediana robusta, ratios sobre absolutos</td></tr>
+<tr><td>Módulo 3</td><td>targets sin filtros (mediana real del top-30%), sensibilidad por palanca, brecha operativa vs estructural</td></tr>
+</table>
+
+<div class="meta" style="margin-top: 40px; text-align: center;">
+Documento generado para tu defensa del Proyecto Finanzas — Working Capital + ML.
+</div>
+
+</body>
+</html>

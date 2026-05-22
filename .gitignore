@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+venv/
+env/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+.virtual_documents/
+
+# Archivos de trabajo locales
+temp.py
+_apply_*.py
+*.tmp
+
+# Streamlit cache local
+.streamlit/secrets.toml
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
