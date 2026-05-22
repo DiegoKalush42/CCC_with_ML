@@ -14,6 +14,53 @@ from scipy.stats.mstats import winsorize
 
 
 # ============================================================
+# MAPEO ticker -> nombre completo de la empresa
+# ============================================================
+COMPANY_NAMES = {
+    # Retail Tradicional
+    "WMT":  "Walmart Inc.",
+    "TGT":  "Target Corporation",
+    "COST": "Costco Wholesale",
+    "HD":   "The Home Depot",
+    "KR":   "The Kroger Co.",
+    "DG":   "Dollar General",
+    "DLTR": "Dollar Tree",
+    # Fast Fashion / Apparel
+    "ANF":  "Abercrombie & Fitch",
+    "GAP":  "The Gap Inc.",
+    "URBN": "Urban Outfitters",
+    "TJX":  "The TJX Companies",
+    "ROST": "Ross Stores",
+    # Automotriz
+    "F":    "Ford Motor Company",
+    "GM":   "General Motors",
+    "TSLA": "Tesla Inc.",
+    # Tech Hardware
+    "AAPL": "Apple Inc.",
+    "DELL": "Dell Technologies",
+    "HPQ":  "HP Inc.",
+    # Industriales
+    "CAT":  "Caterpillar Inc.",
+    "DE":   "Deere & Company",
+    # Farma
+    "PFE":  "Pfizer Inc.",
+    "JNJ":  "Johnson & Johnson",
+    "MRK":  "Merck & Co.",
+    # Bebidas y Consumo
+    "KO":   "The Coca-Cola Company",
+    "PEP":  "PepsiCo Inc.",
+}
+
+
+def nombre_empresa(ticker):
+    """Devuelve 'Nombre completo (TICKER)' o solo el ticker si no se conoce."""
+    nombre = COMPANY_NAMES.get(ticker)
+    if nombre:
+        return f"{nombre} ({ticker})"
+    return ticker
+
+
+# ============================================================
 # PAGE CONFIG + CUSTOM STYLE
 # ============================================================
 st.set_page_config(
@@ -140,7 +187,12 @@ with st.sidebar:
 
     tickers = sorted(df["ticker"].unique())
     default_idx = tickers.index("WMT") if "WMT" in tickers else 0
-    ticker = st.selectbox("Empresa", tickers, index=default_idx)
+    ticker = st.selectbox(
+        "Empresa",
+        tickers,
+        index=default_idx,
+        format_func=lambda t: f"{COMPANY_NAMES.get(t, t)} ({t})",
+    )
 
     df_emp = df[df["ticker"] == ticker]
     años_disponibles = sorted(df_emp["fiscal_year"].unique(), reverse=True)
@@ -153,7 +205,10 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("**Cluster asignado**")
     st.info(f"Cluster {c}")
-    st.caption(f"Top-30% del cluster: {', '.join(t['empresas_top'])}")
+    st.caption(
+        "Top-30% del cluster: "
+        + ", ".join(nombre_empresa(tk) for tk in t["empresas_top"])
+    )
 
     st.markdown("---")
     st.markdown("**Acerca**")
@@ -167,9 +222,11 @@ with st.sidebar:
 # HEADER
 # ============================================================
 st.title("Working Capital Simulator")
+nombre_largo = COMPANY_NAMES.get(ticker, ticker)
 st.markdown(
     f"<h3 style='color:#64748b; font-weight:400; margin-top:-10px;'>"
-    f"{ticker} &nbsp;·&nbsp; {emp['sector']} &nbsp;·&nbsp; FY {año}"
+    f"{nombre_largo} <span style='color:#94a3b8; font-weight:300;'>({ticker})</span>"
+    f" &nbsp;·&nbsp; {emp['sector']} &nbsp;·&nbsp; FY {año}"
     f"</h3>",
     unsafe_allow_html=True
 )
@@ -429,7 +486,11 @@ with tab4:
     col_a, col_b = st.columns(2)
     with col_a:
         st.markdown("**Empresas presentes**")
-        st.write(", ".join(empresas_cluster))
+        tabla_empresas = pd.DataFrame({
+            "Ticker": empresas_cluster,
+            "Empresa": [COMPANY_NAMES.get(tk, "-") for tk in empresas_cluster],
+        })
+        st.dataframe(tabla_empresas, hide_index=True, use_container_width=True)
         st.caption(f"{len(empresas_cluster)} empresas únicas, {len(df_cluster)} observaciones empresa-año")
 
     with col_b:
@@ -444,5 +505,5 @@ with tab4:
 
     st.markdown("---")
     st.markdown("**Empresas usadas para calcular el target (top-30% por menor CCC)**")
-    st.success(", ".join(t["empresas_top"]))
+    st.success(", ".join(nombre_empresa(tk) for tk in t["empresas_top"]))
     st.caption(f"n = {t['n_train']} observaciones empresa-año")
